@@ -123,7 +123,13 @@ int main(int argc, char **argv) {
     CUDA_CHECK(cudaEventCreate(&start));
     CUDA_CHECK(cudaEventCreate(&stop));
 
-    printf("M = N = K = %d\n", n);
+    double refMax = 0;
+    for (float x : hRef) refMax = std::fmax(refMax, std::fabs(x));
+    printf("M = N = K = %d   (max |C| from cuBLAS = %.3f, C[0] = %.5f)\n", n, refMax, hRef[0]);
+    if (!(refMax > 0)) {
+      fprintf(stderr, "reference result is all zeros or NaN; check is meaningless\n");
+      exit(1);
+    }
     printf("  %-22s %10s %10s %12s  %s\n", "kernel", "ms", "GFLOP/s", "% of cuBLAS", "check");
     double cublasGflops = 0;
     for (int id = 0; id < kNumKernels; ++id) {
