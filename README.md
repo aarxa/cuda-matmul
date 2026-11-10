@@ -25,7 +25,7 @@ make            # ARCH=native by default; e.g. make ARCH=sm_75 for a T4 on older
 Every kernel is checked against cuBLAS before it is timed (PASS/FAIL column).
 
 ## Results
-See [RESULTS.md](RESULTS.md) (fill in after running).
+On a Tesla T4: naive 61.8 → vectorized 3,258 GFLOP/s at 4096 (~53x), **87.5% of cuBLAS**, every kernel verified against cuBLAS. Full table: [RESULTS.md](RESULTS.md).
 
 ## Credits
 The kernel progression follows Simon Boehm's "How to Optimize a CUDA Matmul Kernel for
